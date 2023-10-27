@@ -50,7 +50,6 @@ const createExercise = async () => {
 
             <label htmlFor="unit">Unit</label>
             <select required name="unit" id="unit" v-model="unit">
-                <option>---Select---</option>
                 <option value="lbs">lbs</option>
                 <option value="kgs">kgs</option>
                 <option value="miles">miles</option>
