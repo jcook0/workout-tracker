@@ -57,14 +57,14 @@ const findExerciseById = async (_id) => {
 }
 
 
-// DELETE model based on ID  *****************************************
+// DELETE model based on ID 
 const deleteById = async (_id) => {
     const result = await Exercise.deleteOne({ _id: _id });
     return result.deletedCount;
 };
 
 
-// REPLACE model *****************************************************
+// REPLACE model
 const replaceExercise = async (_id, name, reps, weight, unit, date) => {
     const result = await Exercise.replaceOne({ _id: _id }, {
         name: name,
