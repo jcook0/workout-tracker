@@ -1,10 +1,11 @@
 # Workout Tracker
 
-A full-stack CRUD web application for tracking workouts. Users can edit, create, and track workout history. 
+A full-stack CRUD web application for tracking workouts. Users can create and edit workouts to record their fitness journey. 
 
 ## Tech
-Frontend: Vue3, CSS
-Backend: Node JS, Express, MongoDB, Firebase Auth
+Frontend: VueJS, CSS
+
+Backend: NodeJS, Express, MongoDB, Firebase Auth
 
 ## Live Demo
 https://workout-tracker-ijx0.onrender.com
