@@ -4,8 +4,9 @@ import cors from 'cors'
 import * as exercises from './exercises-model.js';
 import { body, validationResult } from 'express-validator';
 import validator from 'validator';
+var path = require('path');
 
-const PORT = process.env.PORT || 5555;
+const PORT = 5555;
 const app = express();
 
 app.use(cors())
