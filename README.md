@@ -9,3 +9,4 @@ Backend: NodeJS, Express, MongoDB, Firebase Auth
 
 ## Live Demo
 https://workout-tracker-ijx0.onrender.com
+> The web application may take a few seconds to start up.
