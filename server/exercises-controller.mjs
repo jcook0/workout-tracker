@@ -18,7 +18,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 app.use(express.static(
-    path.resolve(__dirname, '../dist'),
+    path.resolve(__dirname, '/dist'),
     {
         maxAge: '1y', etag: false
     },
