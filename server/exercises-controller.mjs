@@ -18,11 +18,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 app.use(express.static(
-    path.resolve(__dirname, '/dist'),
-    {
-        maxAge: '1y', etag: false
-    },
-))
+    path.join(__dirname, "./dist")))
 
 
 // CREATE controller
@@ -188,7 +184,7 @@ app.put('/editExercises/:uid/:_id',
 
 
 app.get("*", (req,res) => {
-    res.sendFile(path.join(__dirname, '/dist/index.html'))
+    res.sendFile(path.join(__dirname, './dist'))
 })
 
 
