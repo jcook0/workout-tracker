@@ -1,6 +1,6 @@
 # Workout Tracker
 
-A full-stack CRUD web application for tracking workouts. Users can create and edit workouts to record their fitness journey. 
+A full-stack CRUD web application for tracking workouts. Users can view, create, and edit workouts to record their fitness journey. 
 
 ## Technologies 
 Frontend: VueJS, CSS, Axios
