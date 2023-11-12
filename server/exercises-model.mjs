@@ -3,7 +3,7 @@ import 'dotenv/config';
 
 // Connect based on the .env file parameters.
 mongoose.connect(
-    process.env.MONGODB_CONNECT_STRING,
+    "mongodb+srv://crag:Rm0O3oU459PHUsc4@cluster0.0nxje.mongodb.net/?retryWrites=true&w=majority",
     { useNewUrlParser: true }
 );
 const db = mongoose.connection;
