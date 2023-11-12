@@ -33,11 +33,11 @@ export const globalStore = reactive({
 
 const auth = getAuth();
 
-onAuthStateChanged(auth, user1 => {
-  if (user1) {
-    globalStore.user = user1
+onAuthStateChanged(auth, user => {
+  if (user) {
+    globalStore.user = user
   } else {
-
+    
   }
 })
 
