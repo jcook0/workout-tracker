@@ -1,4 +1,4 @@
-# workout-tracker
+# Workout Tracker
 
-# Demo
+## Live Demo
 https://workout-tracker-ijx0.onrender.com
