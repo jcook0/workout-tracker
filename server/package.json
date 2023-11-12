@@ -2,11 +2,10 @@
   "name": "exercises-api",
   "version": "1.0.0",
   "description": "",
-  "type": "module",
-  "main": "exercises-controller.js",
+  "main": "exercises-controller.mjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon exercises-controller.js"
+    "start": "nodemon exercises-controller.mjs"
   },
   "author": "",
   "license": "ISC",
