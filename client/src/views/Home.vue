@@ -8,7 +8,7 @@ const exercises = ref([])
 
 // retrieve the list of exercises
 const loadExercises = async () => {
-    const response = await axios.get(`http://workout-tracker-18f4.onrender.com:5555/allExercises/${globalStore.user.uid}`);
+    const response = await axios.get(`https://workout-tracker-ijx0.onrender.com:5555/allExercises/${globalStore.user.uid}`);
     const e = response.data;
     e.sort((a, b) => (a.date > b.date ? -1 : 1)) // sort exercises by date
 
@@ -24,7 +24,7 @@ const onEditExercise = async exercise => {
 // delete an exercise
 const onDeleteExercise = async _id => {
 
-    axios.delete(`http://workout-tracker-18f4.onrender.com:5555/exercises/${globalStore.user.uid}/${_id}`)
+    axios.delete(`https://workout-tracker-ijx0.onrender.com:5555/exercises/${globalStore.user.uid}/${_id}`)
         .then(response => {
             // Handle success
             console.log('Delete successful', response);

@@ -20,7 +20,7 @@ const date = ref(formattedDate)
 const createExercise = async () => {
     const newExercise = { name: name.value, reps: reps.value, weight: weight.value, unit: unit.value, date: date.value};
 
-    axios.post(`http://workout-tracker-18f4.onrender.com:5555/exercises/${globalStore.user.uid}`, newExercise, {
+    axios.post(`https://workout-tracker-ijx0.onrender.com:5555/exercises/${globalStore.user.uid}`, newExercise, {
         headers: {
             'Content-Type': 'application/json',
         },
