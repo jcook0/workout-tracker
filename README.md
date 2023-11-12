@@ -3,7 +3,7 @@
 A full-stack CRUD web application for tracking workouts. Users can create and edit workouts to record their fitness journey. 
 
 ## Technologies 
-Frontend: VueJS, CSS
+Frontend: VueJS, CSS, Axios
 
 Backend: NodeJS, Express, MongoDB, Firebase Auth
 
