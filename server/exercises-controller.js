@@ -11,14 +11,14 @@ const app = express();
 app.use(cors())
 app.use(express.json());
 
-/*
+
 app.use(express.static(
     path.resolve(__dirname, '../dist'),
     {
         maxAge: '1y', etag: false
     },
 ))
-*/
+
 
 // CREATE controller
 app.post('/exercises/:uid',
@@ -169,7 +169,7 @@ app.put('/editExercises/:uid/:_id',
                         weight: req.body.weight,
                         unit: req.body.unit,
                         date: req.body.date,
-                        
+
                     })
                 } else {
                     res.status(404).json({ error: "Exercise not found" });
