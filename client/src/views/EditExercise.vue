@@ -1,7 +1,47 @@
 <script setup>
-import {ref, inject} from 'vue'
+import { ref, onMounted } from 'vue'
+import { globalStore } from '../main.js'
+import axios from 'axios';
 
-const exercise = inject('exercise');
+const name = ref('')
+const reps = ref('')
+const weight = ref('')
+const unit = ref('')
+const date = ref('')
+
+const editExercise = async () => {
+
+    let newExercise = {
+        name: name.value,
+        reps: reps.value,
+        weight: weight.value,
+        unit: unit.value,
+        date: date.value
+    }
+
+    axios.put(`http://localhost:5555/editExercises/${globalStore.user.uid}/${globalStore.exercise._id}`, newExercise, {
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+        .then(response => {
+            alert("Successfully edited the exercise!");
+        })
+        .catch(error => {
+            // Handle error
+            alert(`Failed to edit exercise.`);
+            console.error('Error making PUT request', error);
+        });
+};
+
+onMounted(() => {
+    //console.log(globalStore.exercise);
+    name.value = globalStore.exercise.name
+    reps.value = globalStore.exercise.reps
+    weight.value = globalStore.exercise.weight
+    unit.value = globalStore.exercise.unit
+    date.value = globalStore.exercise.date
+})
 
 </script>
 
@@ -9,18 +49,18 @@ const exercise = inject('exercise');
     <article>
         <h2>Edit Exercise</h2>
         <p>Must contain valid name, reps, weight, unit, and date.</p>
-        <form onSubmit="">
+        <form @submit.prevent="editExercise">
             <label htmlFor="name">Exercise</label>
-            <input required type="text" value={name} onChange="setName" id="name" />
+            <input required type="text" placeholder="Exercise name" id="name" v-model="name" />
 
             <label htmlFor="reps">Reps</label>
-            <input required type="number" value={reps} onChange="setReps" id="reps" />
+            <input required type="number" placeholder="Reps performed"  id="reps" v-model="reps" />
 
             <label htmlFor="weight">Weight</label>
-            <input required type="number" value={weight} onChange="setWeight" id="weight" />
+            <input required type="number" placeholder="Weight used"  id="weight" v-model="weight" />
 
             <label htmlFor="unit">Unit</label>
-            <select required name="unit" id="unit" value={unit} onChange="setUnit">
+            <select required name="unit" id="unit"  v-model="unit">
                 <option value="lbs">lbs</option>
                 <option value="kgs">kgs</option>
                 <option value="miles">miles</option>
@@ -28,10 +68,10 @@ const exercise = inject('exercise');
             </select>
 
             <label htmlFor="date">Date</label>
-            <input required type="date" value={date} onChange="setDate" id="date" />
+            <input required type="date"  id="date" v-model="date" min="2020-01-01" />
 
             <label htmlFor="submit">
-            <button onClick={editExercise} id="submit">Save</button></label>
+            <input type="submit" value="Save" id="submit"></label>
         </form>
     </article>
 </template>

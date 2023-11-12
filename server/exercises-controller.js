@@ -1,10 +1,9 @@
 import 'dotenv/config';
 import express from 'express';
 import cors from 'cors'
-import * as exercises from './exercises-model.mjs';
+import * as exercises from './exercises-model.js';
 import { body, validationResult } from 'express-validator';
 import validator from 'validator';
-
 
 const PORT = process.env.PORT || 5555;
 const app = express();
@@ -12,8 +11,17 @@ const app = express();
 app.use(cors())
 app.use(express.json());
 
+/*
+app.use(express.static(
+    path.resolve(__dirname, '../dist'),
+    {
+        maxAge: '1y', etag: false
+    },
+))
+*/
+
 // CREATE controller
-app.post('/exercises',
+app.post('/exercises/:uid',
 
     //Input Validations
     body('name').isLength({ min: 1 }).withMessage("Invalid name."),
@@ -51,7 +59,8 @@ app.post('/exercises',
             req.body.reps,
             req.body.weight,
             req.body.unit,
-            req.body.date
+            req.body.date,
+            req.params.uid
         )
             .then(exercise => {
                 res.status(201).json(exercise);
@@ -83,16 +92,16 @@ app.get('/exercises/:_id', (req, res) => {
 });
 
 // GET list of all exercises
-app.get('/exercises/', (req, res) => {
-    exercises.getExercises()
+app.get('/allExercises/:uid', (req, res) => {
+    exercises.getExercises(req.params.uid)
         .then(exercises => {
             res.status(200).json(exercises)
         })
 });
 
-// DELETE Controller ******************************
-app.delete('/exercises/:_id', (req, res) => {
-    exercises.deleteById(req.params._id)
+// DELETE Controller
+app.delete('/exercises/:uid/:_id', (req, res) => {
+    exercises.deleteById(req.params._id, req.params.uid)
         .then(deletedCount => {
             if (deletedCount === 1) {
                 res.status(204).send();
@@ -107,7 +116,7 @@ app.delete('/exercises/:_id', (req, res) => {
 });
 
 // UPDATE controller
-app.put('/exercises/:_id',
+app.put('/editExercises/:uid/:_id',
 
     //Input Validations
     body('name').isLength({ min: 1 }).withMessage("Invalid name."),
@@ -140,13 +149,15 @@ app.put('/exercises/:_id',
             return res.status(400).json({ errors: errors.array() });
         }
 
+
         exercises.replaceExercise(
             req.params._id,
             req.body.name,
             req.body.reps,
             req.body.weight,
             req.body.unit,
-            req.body.date
+            req.body.date,
+            req.params.uid
         )
             .then(numUpdated => {
                 if (numUpdated === 1) {
@@ -157,7 +168,8 @@ app.put('/exercises/:_id',
                         reps: req.body.reps,
                         weight: req.body.weight,
                         unit: req.body.unit,
-                        date: req.body.date
+                        date: req.body.date,
+                        
                     })
                 } else {
                     res.status(404).json({ error: "Exercise not found" });
@@ -168,6 +180,13 @@ app.put('/exercises/:_id',
                 res.status(400).json({ error: "Request to update an exercise failed" });
             });
     });
+
+/*
+app.get("*", (req,res) => {
+
+})
+
+*/
 
 
 app.listen(PORT, () => {

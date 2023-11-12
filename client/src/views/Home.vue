@@ -1,49 +1,57 @@
 <script setup>
 import ExerciseList from "../components/ExerciseList.vue"
-import { ref, onMounted  } from 'vue'
+import { ref, onMounted } from 'vue'
+import axios from 'axios'
+import { globalStore, router } from '../main.js'
 
 const exercises = ref([])
 
-// RETRIEVE the list of exercises
+// retrieve the list of exercises
 const loadExercises = async () => {
-    const response = await fetch('http://localhost:5555/exercises');
-    const e = await response.json();
+    const response = await axios.get(`http://localhost:5555/allExercises/${globalStore.user.uid}`);
+    const e = response.data;
+    e.sort((a, b) => (a.date > b.date ? -1 : 1)) // sort exercises by date
+
     exercises.value = e
 }
 
-// UPDATE an exercise
+// update an exercise
 const onEditExercise = async exercise => {
-    console.log("TEST")
-    //exercises.value = exercise
-    //$router.push('/editExercise');
-    window.location="/editExercise"
+    globalStore.exercise = exercise
+    router.push('/editExercise')
 }
 
-
-// DELETE an exercise
-//:exercises={exercises} :onEdit={onEditExercise} :onDelete={onDeleteExercise}
+// delete an exercise
 const onDeleteExercise = async _id => {
-    const response = await fetch(`http://localhost:5555/exercises/${_id}`, { method: 'DELETE' });
-    if (response.status === 204) {
-        loadExercises()
-        alert("Successfully deleted exercise!");
-    } else {
-        console.error(`Failed to delete exercise with _id = ${_id}, status code = ${response.status}`)
-        alert("Failed to delete exercise.");
-    }
+
+    axios.delete(`http://localhost:5555/exercises/${globalStore.user.uid}/${_id}`)
+        .then(response => {
+            // Handle success
+            console.log('Delete successful', response);
+            alert("Successfully deleted exercise!");
+            loadExercises()
+        })
+        .catch(error => {
+            // Handle error
+            console.error('Error deleting resource', error);
+            alert("Failed to delete exercise.");
+        });
+
 }
 
-onMounted ( ()=> {
+onMounted(() => {
     loadExercises()
 })
-
 
 </script>
 
 <template>
     <article>
-        <h2>Table of Exercises</h2>
-        <p>Create, Edit, and Delete exercises.</p>
-        <ExerciseList :exercises="exercises" :onEdit="onEditExercise" :onDelete="onDeleteExercise" />
+        <div>
+            <h2>Table of Exercises</h2>
+            <p>Create, Edit, and Delete exercises.</p>
+            <p>You are signed in as user {{ globalStore.user.uid }} </p>
+            <ExerciseList :exercises="exercises" :onEdit="onEditExercise" :onDelete="onDeleteExercise" />
+        </div>
     </article>
 </template>

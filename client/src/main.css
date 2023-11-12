@@ -1,7 +1,7 @@
 /*   ----- Imports  -----  */
 
 /* Google Fonts */
-@import url(//fonts.googleapis.com/css?family=Roboto);
+@import url(//fonts.googleapis.com/css?family=Poppins);
 
 /* npm install modern-normalize */
 
@@ -15,9 +15,24 @@ body {
 
     background-size: cover;
     background-attachment: fixed;
-    font-family: 'Roboto';
+    font-family: 'Poppins';
     font-size: 1.05em;
     text-align: center;
+}
+
+:root {
+    --primary: #EA40A4;
+	--business: #3A82EE;
+	--personal: var(--primary);
+	--light: #EEE;
+	--grey: #888;
+	--dark: #313154;
+	--danger: #ff5b57;
+
+    --shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+	--business-glow: 0px 0px 4px rgba(58, 130, 238, 0.75);
+	--personal-glow: 0px 0px 4px rgba(234, 64, 164, 0.75);
 }
 
 
@@ -39,8 +54,8 @@ a:visited {}
 
 /*  ----- Navigation ----- Override text links for navigation only.  */
 nav {
-    background-color: #000000bc;
-    padding: 1.1em;
+    background-color: rgba(0, 0, 0, 0.856);
+    padding: 1.2em;
     padding-right: 7em;
 }
 
@@ -53,15 +68,35 @@ nav a {
     padding-top: 1.3em;
 }
 
+nav p {
+    text-decoration: none;
+    color: white;
+    margin: 0.9em;
+    font-size: 0.95em;
+    padding: 1.2em;
+    padding-top: 1.3em;
+}
+
+
 #page1:hover,
 #page2:hover {
     background-color: #7d7d7d77;
     cursor: pointer;
 }
 
-#siteName {
-    margin-right: 17em;
-    font-size: 1.1em;
+input[type="submit"], button {
+	font-size: 1.125rem;
+	padding: 1rem 1.5rem;
+	color: #FFF;
+	background-color: var(--business);
+	border-radius: 0.5rem;
+    border: none;
+	cursor: pointer;
+	transition: 0.2s ease-in-out;
+}
+
+.danger {
+    background-color: var(--danger);
 }
 
 #icon {
@@ -89,6 +124,15 @@ nav a {
 header {
     background-color: rgba(0, 0, 0, 0.610);
 
+}
+
+input[type="text"], input[type="number"] {
+	font-size: 1.125rem;
+	padding: 1rem 1.5rem;
+	color: var(--dark);
+	background-color: #FFF;
+	border-radius: 0.5rem;
+	box-shadow: var(--shadow);
 }
 
 main {
@@ -248,7 +292,7 @@ datalist {}
 
 /*  ----- Form ----- */
 form {
-    margin-top: 3em;
+    margin-top: 2em;
 }
 
 

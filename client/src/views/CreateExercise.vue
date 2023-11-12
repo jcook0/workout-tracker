@@ -1,35 +1,40 @@
 <script setup>
 import { ref } from 'vue'
+import { router, globalStore } from '../main.js'
+import axios from 'axios';
+
+const today = new Date();
+const year = today.getFullYear();
+const month = (today.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-based, so add 1
+const day = today.getDate().toString().padStart(2, '0');
+
+
+const formattedDate = `${year}-${month}-${day}`;
 
 const name = ref('')
 const reps = ref('')
 const weight = ref('')
 const unit = ref('')
-const date = ref('')
+const date = ref(formattedDate)
 
 const createExercise = async () => {
-    const newExercise = { name: name.value, reps: reps.value, weight: weight.value, unit: unit.value, date: date.value };
-    console.log(newExercise)
-    const response = await fetch('http://localhost:5555/exercises', {
-        method: 'post',
-        body: JSON.stringify(newExercise),
+    const newExercise = { name: name.value, reps: reps.value, weight: weight.value, unit: unit.value, date: date.value};
+
+    axios.post(`http://localhost:5555/exercises/${globalStore.user.uid}`, newExercise, {
         headers: {
             'Content-Type': 'application/json',
         },
-    });
-
-    if (response.status === 201) {
-        alert("Successfully created the exercise!");
-    } else {
-        const errMessage = await response.json();
-        if (errMessage.errors !== undefined) {
-            alert(`Failed to create exercise. Status ${response.status}. ${errMessage.errors[0].msg}`);
-        }
-        else {
-            alert(`Failed to create exercise. Status ${response.status}. ${errMessage.error}`);
-        }
-    }
-    window.location="/"
+    })
+        .then(response => {
+            console.log('POST successful', response);
+            alert("Successfully created the exercise!");
+            router.push("/")
+        })
+        .catch(error => {
+            // Handle error
+            alert(`Failed to create exercise.`);
+            console.error('Error making POST request', error);
+        });
 };
 
 </script>
@@ -40,7 +45,7 @@ const createExercise = async () => {
         <p>Must contain valid name, reps, weight, unit, and date.</p>
         <form @submit.prevent="createExercise">
             <label htmlFor="name">Exercise</label>
-            <input required type="text" placeholder="Exercise name" id="name" v-model="name" />
+            <input required type="text" placeholder="Exercise name" autocomplete="one-time-code" id="name" v-model="name" />
 
             <label htmlFor="reps">Reps</label>
             <input required type="number" placeholder="Reps performed" id="reps" v-model="reps" />
@@ -57,7 +62,7 @@ const createExercise = async () => {
             </select>
 
             <label htmlFor="date">Date</label>
-            <input required type="date" onChange="setDate" id="date" v-model="date" />
+            <input required type="date" onChange="setDate" id="date" v-model="date" min="2020-01-01" />
 
             <label htmlFor="submit">
                 <input type="submit" value="Create" id="submit"></label>
