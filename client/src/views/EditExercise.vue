@@ -19,7 +19,7 @@ const editExercise = async () => {
         date: date.value
     }
 
-    axios.put(`http://localhost:5555/editExercises/${globalStore.user.uid}/${globalStore.exercise._id}`, newExercise, {
+    axios.put(`http://workout-tracker-18f4.onrender.com:5555/editExercises/${globalStore.user.uid}/${globalStore.exercise._id}`, newExercise, {
         headers: {
             'Content-Type': 'application/json',
         },
